@@ -1,6 +1,6 @@
 ARG PARENT_IMAGE
-ARG USE_GPU
 FROM $PARENT_IMAGE
+ARG USE_GPU
 
 RUN apt-get -y update \
     && apt-get -y install \
@@ -27,7 +27,7 @@ ENV VENV /root/venv
 
 COPY ./setup.py /root/code/setup.py
 RUN \
-    mkdir -p ${CODE_DIR}/stable_baselines && \
+    mkdir -p ${CODE_DIR}/stable-baselines && \
     pip install virtualenv && \
     virtualenv $VENV --python=python3 && \
     . $VENV/bin/activate && \
