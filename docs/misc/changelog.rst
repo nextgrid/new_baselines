@@ -22,6 +22,7 @@ Bug Fixes:
 ^^^^^^^^^^
 
 - Fixed Docker build script, `scripts/build_docker.sh`, to pass `USE_GPU` build argument.
+- Fixed Docker GPU run script, `scripts/run_docker_gpu.sh`, to work with new NVidia Container Toolkit.
 - Repeated calls to `RLModel.learn()` now preserve internal counters for some episode
   logging statistics that used to be zeroed at the start of every call.
 
