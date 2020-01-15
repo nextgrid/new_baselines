@@ -25,22 +25,15 @@ RUN apt-get -y update \
 ENV CODE_DIR /root/code
 ENV VENV /root/venv
 
-COPY ./setup.py /root/code/setup.py
+COPY ./setup.py ${CODE_DIR}/stable-baselines/setup.py
 RUN \
-    mkdir -p ${CODE_DIR}/stable-baselines && \
     pip install virtualenv && \
     virtualenv $VENV --python=python3 && \
     . $VENV/bin/activate && \
-    cd $CODE_DIR && \
     pip install --upgrade pip && \
-    if [ "$USE_GPU" = "True" ]; then \
-        TENSORFLOW_PACKAGE="tensorflow-gpu==1.8.0"; \
-    else \
-        TENSORFLOW_PACKAGE="tensorflow==1.8.0"; \
-    fi; \
-    pip install ${TENSORFLOW_PACKAGE} && \
+    cd ${CODE_DIR}/stable-baselines && \
+    python setup.py egg_info && cat stable_baselines.egg-info/requires.txt && rm -rf stable_baselines.egg-info && \
     pip install -e .[mpi,tests] && \
-    pip install codacy-coverage && \
     rm -rf $HOME/.cache/pip
 
 ENV PATH=$VENV/bin:$PATH

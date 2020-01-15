@@ -1,3 +1,4 @@
+import os
 import sys
 import subprocess
 from setuptools import setup, find_packages
@@ -26,6 +27,8 @@ except ImportError:
                 break
         except IOError:  # command does not exist / is not executable
             pass
+    if os.environ['USE_GPU'] == 'True':  # force GPU even if not auto-detected
+        tf_gpu = True
 
 tf_dependency = []
 if install_tf:
